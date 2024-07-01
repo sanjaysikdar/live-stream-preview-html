@@ -49,6 +49,7 @@
     <div class="container">
         <h1 class="display-6 mt-5 fw-bold"><span class="text-warning">Live!</span> Player</h1>
         <p class="text-warning">Powered by Buzzbites Team!</p>
+        <button id="muteAllButton" class="btn btn-warning btn-sm ">Unmute All</button>
         <div class="video-wrapper">
             <div class="video-container" id="container1">
                 <div class="video-title">
@@ -124,7 +125,30 @@
         });
 
     </script>
-    
+    <script>
+        // Assume videos start in a muted state
+        let areVideosMuted = true; // Adjust the flag to reflect the initial state
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Optionally mute all videos on page load, if not already set in HTML
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => video.muted = true);
+
+            // Set initial button text
+            document.getElementById('muteAllButton').textContent = "Unmute All";
+        });
+
+        document.getElementById('muteAllButton').addEventListener('click', function () {
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                video.muted = !areVideosMuted; // Toggle based on the flag
+            });
+            areVideosMuted = !areVideosMuted; // Invert the flag after toggling
+
+            // Update button text based on the mute state
+            this.textContent = areVideosMuted ? "Unmute All" : "Mute All";
+        });
+    </script>
 </body>
 
 </html>
