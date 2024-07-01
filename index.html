@@ -67,7 +67,13 @@
                 
 
                 <!-- Title div added here -->
-                <div id="mainVideoTitle" class="video-title" style="display: none;">Stream Preview</div>
+                <div id="mainVideoTitle" class="video-title" style="display: none;">
+                    <div class="d-flex justify-content-between align-content-center align-items-center">
+                        <div id="titleMain">Stream Preview</div>
+                        <button onclick="closeMainVideo()" class="btn btn-dark btn-sm">Close</button>
+
+                    </div>
+                </div>
                 <video class='rounded shadow-lg' id="mainVideo" style="min-height: 50vh;" controls></video>
           
             </div>
@@ -153,7 +159,7 @@
                     mainVideo.muted = false; // Unmute the video
                     mainVideo.play();
                     mainVideoTitle.style.display = 'block'; // Show the title div
-                    mainVideoTitle.textContent = 'Stream ' + (index + 1);
+                    titleMain.textContent = 'Stream ' + (index + 1);
                 });
             } else {
                 container.style.display = 'none';
@@ -184,6 +190,23 @@
             // Update button text based on the mute state
             this.textContent = areVideosMuted ? "Unmute All" : "Mute All";
         });
+
+
+
+
+        // Function to close/hide the mainVideo and its title
+    function closeMainVideo() {
+        var mainVideo = document.getElementById('mainVideo');
+        var mainVideoTitle = document.getElementById('mainVideoTitle');
+        var titleMain = document.getElementById('titleMain');
+        mainVideo.style.display = 'none'; // Hide the video
+        mainVideoTitle.style.display = 'none'; // Hide the title
+        mainVideo.pause(); // Pause the video
+        mainVideo.currentTime = 0; // Reset video time to start
+    }
+
+    // Attach the close function to the close button's click event
+    // document.getElementById('closeMainVideo').addEventListener('click', closeMainVideo);
     </script>
 
 </body>
