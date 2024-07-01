@@ -19,9 +19,10 @@
         }
 
         .main-video-container video {
-            width: 80%;
+            width: 100%;
             max-width: 1000px;
             aspect-ratio: 16 / 9;
+            display: none;
         }
 
         .video-wrapper {
@@ -57,13 +58,21 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1 class="display-6 mt-5 fw-bold"><span class="text-warning">Live!</span> Player</h1>
+    <div class="container mb-5">
+        <h1 class="display-6 mt-2 fw-bold"><span class="text-warning">Live!</span> Player</h1>
         <p class="text-warning">Powered by Buzzbites Team!</p>
-        <button id="muteAllButton" class="btn btn-warning btn-sm ">Unmute All</button>
 
-        <div class="main-video-container">
-            <video id="mainVideo" controls></video>
+        <div class="row">
+            <div class="main-video-container video-container d-flex justify-content-center align-items-center w-100">
+                
+
+                <!-- Title div added here -->
+                <div id="mainVideoTitle" class="video-title" style="display: none;">Stream Preview</div>
+                <video class='rounded shadow-lg' id="mainVideo" style="min-height: 50vh;" controls></video>
+          
+            </div>
+
+            <hr />
         </div>
 
         <div class="video-wrapper">
@@ -71,46 +80,51 @@
                 <div class="video-title">
                     <div class="d-flex justify-content-between">
                         <div>Stream 1</div>
-                        <a class="text-light" href="https://media-stream-01.meghbelabroadband.com/stats" target="_blank">View Stats</a>
+                        <a class="text-light" href="https://media-stream-01.meghbelabroadband.com/stats"
+                            target="_blank">View Stats</a>
                     </div>
                 </div>
-                <video id="video1" controls muted></video>
+                <video id="video1" class='rounded shadow' controls muted></video>
             </div>
             <div class="video-container" id="container2">
                 <div class="video-title">
                     <div class="d-flex justify-content-between">
                         <div>Stream 2</div>
-                        <a class="text-light" href="https://media-stream-02.meghbelabroadband.com/stats" target="_blank">View Stats</a>
+                        <a class="text-light" href="https://media-stream-02.meghbelabroadband.com/stats"
+                            target="_blank">View Stats</a>
                     </div>
                 </div>
-                <video id="video2" controls muted></video>
+                <video id="video2" class='rounded shadow' controls muted></video>
             </div>
             <div class="video-container" id="container3">
                 <div class="video-title">
                     <div class="d-flex justify-content-between">
                         <div>Stream 3</div>
-                        <a class="text-light" href="https://media-stream-03.meghbelabroadband.com/stats" target="_blank">View Stats</a>
+                        <a class="text-light" href="https://media-stream-03.meghbelabroadband.com/stats"
+                            target="_blank">View Stats</a>
                     </div>
                 </div>
-                <video id="video3" controls muted></video>
+                <video id="video3" class='rounded shadow' controls muted></video>
             </div>
             <div class="video-container" id="container4">
                 <div class="video-title">
                     <div class="d-flex justify-content-between">
                         <div>Stream 4</div>
-                        <a class="text-light" href="https://media-stream-04.meghbelabroadband.com/stats" target="_blank">View Stats</a>
+                        <a class="text-light" href="https://media-stream-04.meghbelabroadband.com/stats"
+                            target="_blank">View Stats</a>
                     </div>
                 </div>
-                <video id="video4" controls muted></video>
+                <video id="video4" class='rounded shadow' controls muted></video>
             </div>
             <div class="video-container" id="container5">
                 <div class="video-title">
                     <div class="d-flex justify-content-between">
                         <div>Stream 5</div>
-                        <a class="text-light" href="https://media-stream-05.meghbelabroadband.com/stats" target="_blank">View Stats</a>
+                        <a class="text-light" href="https://media-stream-05.meghbelabroadband.com/stats"
+                            target="_blank">View Stats</a>
                     </div>
                 </div>
-                <video id="video5" controls muted></video>
+                <video id="video5" class='rounded shadow' controls muted></video>
             </div>
         </div>
     </div>
@@ -135,7 +149,11 @@
                 container.addEventListener('click', function () {
                     hlsMain.loadSource(url);
                     hlsMain.attachMedia(mainVideo);
+                    mainVideo.style.display = 'block'; // Set the display to 'block' here
+                    mainVideo.muted = false; // Unmute the video
                     mainVideo.play();
+                    mainVideoTitle.style.display = 'block'; // Show the title div
+                    mainVideoTitle.textContent = 'Stream ' + (index + 1);
                 });
             } else {
                 container.style.display = 'none';
