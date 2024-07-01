@@ -13,28 +13,16 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
-        .main-video-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .main-video-container video {
-            width: 100%;
-            max-width: 1000px;
-            aspect-ratio: 16 / 9;
-            display: none;
-        }
-
         .video-wrapper {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
+            padding-top: 20px;
             margin: 0 auto;
         }
 
         .video-container {
             position: relative;
-            cursor: pointer;
         }
 
         .video-title {
@@ -58,23 +46,9 @@
 </head>
 
 <body>
-    <div class="container mb-5">
-        <h1 class="display-6 mt-2 fw-bold"><span class="text-warning">Live!</span> Player</h1>
+    <div class="container">
+        <h1 class="display-6 mt-5 fw-bold"><span class="text-warning">Live!</span> Player</h1>
         <p class="text-warning">Powered by Buzzbites Team!</p>
-
-        <div class="row">
-            <div class="main-video-container video-container d-flex justify-content-center align-items-center w-100">
-                
-
-                <!-- Title div added here -->
-                <div id="mainVideoTitle" class="video-title" style="display: none;">Stream Preview</div>
-                <video class='rounded shadow-lg' id="mainVideo" style="min-height: 50vh;" controls></video>
-          
-            </div>
-
-            <hr />
-        </div>
-
         <div class="video-wrapper">
             <div class="video-container" id="container1">
                 <div class="video-title">
@@ -84,7 +58,7 @@
                             target="_blank">View Stats</a>
                     </div>
                 </div>
-                <video id="video1" class='rounded shadow' controls muted></video>
+                <video id="video1" controls muted></video>
             </div>
             <div class="video-container" id="container2">
                 <div class="video-title">
@@ -94,7 +68,7 @@
                             target="_blank">View Stats</a>
                     </div>
                 </div>
-                <video id="video2" class='rounded shadow' controls muted></video>
+                <video id="video2" controls muted></video>
             </div>
             <div class="video-container" id="container3">
                 <div class="video-title">
@@ -104,7 +78,7 @@
                             target="_blank">View Stats</a>
                     </div>
                 </div>
-                <video id="video3" class='rounded shadow' controls muted></video>
+                <video id="video3" controls muted></video>
             </div>
             <div class="video-container" id="container4">
                 <div class="video-title">
@@ -114,7 +88,7 @@
                             target="_blank">View Stats</a>
                     </div>
                 </div>
-                <video id="video4" class='rounded shadow' controls muted></video>
+                <video id="video4" controls muted></video>
             </div>
             <div class="video-container" id="container5">
                 <div class="video-title">
@@ -124,15 +98,13 @@
                             target="_blank">View Stats</a>
                     </div>
                 </div>
-                <video id="video5" class='rounded shadow' controls muted></video>
+                <video id="video5" controls muted></video>
             </div>
         </div>
     </div>
     <script>
         var params = new URLSearchParams(window.location.search);
         var urls = [params.get('url1'), params.get('url2'), params.get('url3'), params.get('url4'), params.get('url5')];
-        var mainVideo = document.getElementById('mainVideo');
-        var hlsMain = new Hls();
 
         urls.forEach(function (url, index) {
             var container = document.getElementById('container' + (index + 1));
@@ -146,46 +118,13 @@
                         video.play();
                     });
                 });
-                container.addEventListener('click', function () {
-                    hlsMain.loadSource(url);
-                    hlsMain.attachMedia(mainVideo);
-                    mainVideo.style.display = 'block'; // Set the display to 'block' here
-                    mainVideo.muted = false; // Unmute the video
-                    mainVideo.play();
-                    mainVideoTitle.style.display = 'block'; // Show the title div
-                    mainVideoTitle.textContent = 'Stream ' + (index + 1);
-                });
             } else {
                 container.style.display = 'none';
             }
         });
 
     </script>
-    <script>
-        // Assume videos start in a muted state
-        let areVideosMuted = true; // Adjust the flag to reflect the initial state
-
-        document.addEventListener('DOMContentLoaded', (event) => {
-            // Optionally mute all videos on page load, if not already set in HTML
-            const videos = document.querySelectorAll('video');
-            videos.forEach(video => video.muted = true);
-
-            // Set initial button text
-            document.getElementById('muteAllButton').textContent = "Unmute All";
-        });
-
-        document.getElementById('muteAllButton').addEventListener('click', function () {
-            const videos = document.querySelectorAll('video');
-            videos.forEach(video => {
-                video.muted = !areVideosMuted; // Toggle based on the flag
-            });
-            areVideosMuted = !areVideosMuted; // Invert the flag after toggling
-
-            // Update button text based on the mute state
-            this.textContent = areVideosMuted ? "Unmute All" : "Mute All";
-        });
-    </script>
-
+    
 </body>
 
 </html>
