@@ -13,16 +13,27 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
+        .main-video-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .main-video-container video {
+            width: 80%;
+            max-width: 1000px;
+            aspect-ratio: 16 / 9;
+        }
+
         .video-wrapper {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            padding-top: 20px;
             margin: 0 auto;
         }
 
         .video-container {
             position: relative;
+            cursor: pointer;
         }
 
         .video-title {
@@ -50,13 +61,17 @@
         <h1 class="display-6 mt-5 fw-bold"><span class="text-warning">Live!</span> Player</h1>
         <p class="text-warning">Powered by Buzzbites Team!</p>
         <button id="muteAllButton" class="btn btn-warning btn-sm ">Unmute All</button>
+
+        <div class="main-video-container">
+            <video id="mainVideo" controls></video>
+        </div>
+
         <div class="video-wrapper">
             <div class="video-container" id="container1">
                 <div class="video-title">
                     <div class="d-flex justify-content-between">
                         <div>Stream 1</div>
-                        <a class="text-light" href="https://media-stream-01.meghbelabroadband.com/stats"
-                            target="_blank">View Stats</a>
+                        <a class="text-light" href="https://media-stream-01.meghbelabroadband.com/stats" target="_blank">View Stats</a>
                     </div>
                 </div>
                 <video id="video1" controls muted></video>
@@ -65,8 +80,7 @@
                 <div class="video-title">
                     <div class="d-flex justify-content-between">
                         <div>Stream 2</div>
-                        <a class="text-light" href="https://media-stream-02.meghbelabroadband.com/stats"
-                            target="_blank">View Stats</a>
+                        <a class="text-light" href="https://media-stream-02.meghbelabroadband.com/stats" target="_blank">View Stats</a>
                     </div>
                 </div>
                 <video id="video2" controls muted></video>
@@ -75,8 +89,7 @@
                 <div class="video-title">
                     <div class="d-flex justify-content-between">
                         <div>Stream 3</div>
-                        <a class="text-light" href="https://media-stream-03.meghbelabroadband.com/stats"
-                            target="_blank">View Stats</a>
+                        <a class="text-light" href="https://media-stream-03.meghbelabroadband.com/stats" target="_blank">View Stats</a>
                     </div>
                 </div>
                 <video id="video3" controls muted></video>
@@ -85,8 +98,7 @@
                 <div class="video-title">
                     <div class="d-flex justify-content-between">
                         <div>Stream 4</div>
-                        <a class="text-light" href="https://media-stream-04.meghbelabroadband.com/stats"
-                            target="_blank">View Stats</a>
+                        <a class="text-light" href="https://media-stream-04.meghbelabroadband.com/stats" target="_blank">View Stats</a>
                     </div>
                 </div>
                 <video id="video4" controls muted></video>
@@ -95,8 +107,7 @@
                 <div class="video-title">
                     <div class="d-flex justify-content-between">
                         <div>Stream 5</div>
-                        <a class="text-light" href="https://media-stream-05.meghbelabroadband.com/stats"
-                            target="_blank">View Stats</a>
+                        <a class="text-light" href="https://media-stream-05.meghbelabroadband.com/stats" target="_blank">View Stats</a>
                     </div>
                 </div>
                 <video id="video5" controls muted></video>
@@ -106,6 +117,8 @@
     <script>
         var params = new URLSearchParams(window.location.search);
         var urls = [params.get('url1'), params.get('url2'), params.get('url3'), params.get('url4'), params.get('url5')];
+        var mainVideo = document.getElementById('mainVideo');
+        var hlsMain = new Hls();
 
         urls.forEach(function (url, index) {
             var container = document.getElementById('container' + (index + 1));
@@ -118,6 +131,11 @@
                     hls.on(Hls.Events.MANIFEST_PARSED, function () {
                         video.play();
                     });
+                });
+                container.addEventListener('click', function () {
+                    hlsMain.loadSource(url);
+                    hlsMain.attachMedia(mainVideo);
+                    mainVideo.play();
                 });
             } else {
                 container.style.display = 'none';
@@ -149,6 +167,7 @@
             this.textContent = areVideosMuted ? "Unmute All" : "Mute All";
         });
     </script>
+
 </body>
 
 </html>
